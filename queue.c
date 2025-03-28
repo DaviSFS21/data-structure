@@ -6,11 +6,11 @@ typedef struct cel {
     struct cel *prox;
 } celula;
 
-celula *createListFromArray(int x[]) {
+celula *createListFromArray(celula **list, int x[]) {
   celula *newElement = malloc(sizeof(celula)); // allocate memory for the new element
   newElement -> valor = x[0];
   newElement -> prox = NULL;
-  celula *list = newElement; // saving list's first element
+  *list = newElement; // saving list's first element
   celula *lastCreated = newElement; // helper variable
 
   int i;
@@ -22,13 +22,7 @@ celula *createListFromArray(int x[]) {
       lastCreated = newElement; // keeping track of the last element
   }
 
-  return list;
-}
-
-celula *getLastCelula(celula *list) { // prints all elements
-  if (list == NULL) return;
-  if (list -> prox == NULL) return list;
-  getLastCelula(list -> prox);
+  return lastCreated; // the last element created might be the end of the queue
 }
 
 void printCelula(celula *list) { // prints all elements
@@ -37,11 +31,11 @@ void printCelula(celula *list) { // prints all elements
     printCelula(list -> prox);
 }
 
-void addElement(celula **list, int x) { // add element at the beginning
+void addElement(celula *end, int x) { // add element at the beginning
   celula *nova = malloc(sizeof(celula));
-  nova -> prox = *list;
+  end -> prox = nova;
   nova -> valor = x;
-  *list = nova;
+  nova -> prox = NULL;
 }
 
 int removeElement(celula **list) {
@@ -54,22 +48,18 @@ int removeElement(celula **list) {
 
 int main() {
   int intArray[] = {1,2,3,4,5};
-  celula *list = createListFromArray(intArray);
-  // to track the last element, we could return the address
-  // of the celula with a NULL prox pointer, after giving
-  // the createListFromArray the intArray and the
-  // *list too.
-  // createListFromArray(celula *listStart, int x[])
+  celula *listStart;
+  celula *listEnd = createListFromArray(&listStart, intArray);
   
-  printCelula(list);
+  printCelula(listStart);
   printf("\n-------------------------------------------\n");
-  addElement(&list,6);
+  addElement(listEnd,6);
   printf("List with added element: \n");
-  printCelula(list);
+  printCelula(listStart);
   printf("\n-------------------------------------------\n");
-  printf("Removed at start: %i", removeElement(&list));
+  printf("Removed at start: %i", removeElement(&listStart));
   printf("\n-------------------------------------------\n");
-  printCelula(list);
+  printCelula(listStart);
   printf("\n-------------------------------------------\n");
 
   return 0;
