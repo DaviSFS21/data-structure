@@ -63,7 +63,7 @@ int main() {
   int intArray[] = {1,2,3,4,5};
   celula *list = createListFromArray(intArray);  
   
-  addElement(list,7);
+  addElement(list,0);
   printCelula(list -> prox);
   printf("\n-------------------------------------------\n");
   printf("Removed element: %i", removeElement(list));
