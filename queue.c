@@ -7,8 +7,11 @@ typedef struct cel {
 } celula;
 
 void printCelula(celula *start) { // prints all elements
-    if (start == NULL) return;
-    printf("%i\n", start -> value);
+    if (start == NULL) {
+      printf("\n");
+      return;
+    }
+    printf("%i, ", start -> value);
     printCelula(start -> next);
 }
 
@@ -17,10 +20,10 @@ void addElement(celula **start, celula **end, int x) { // add element at the beg
   new -> value = x;
   new -> next = NULL;
 
-  if(*start == NULL && *end == NULL) {
+  if(*start == NULL && *end == NULL) { // if there are no elements, both start and end will point to new
     *start = new;
     *end = new;
-  } else {
+  } else { // or else, the penultimate element will point to new, then the end will point to new too
     (*end) -> next = new;
     *end = new;
   }
@@ -31,11 +34,9 @@ int removeElement(celula **start, celula **end) {
   else {
     celula *del = *start; // del var stores the first cell
     int x = del -> value;
+    *start = del -> next;
     if (del -> next == NULL) { // if there is only one element, both list adresses will be NULL
-      *start = NULL;
       *end = NULL;
-    } else { // otherwise, start will get the element after the deleted element
-      *start = del -> next;
     }
     free(del);
     return x;
@@ -54,13 +55,22 @@ int main() {
   printCelula(listStart);
   printf("\n-------------------------------------------\n");
   addElement(&listStart, &listEnd, 6);
-  printf("List with added element: \n");
+  printf("List with added element: 6\n");
   printCelula(listStart);
-  printf("\n-------------------------------------------\n");
-  printf("Removed at start: %i", removeElement(&listStart, &listEnd));
-  printf("\n-------------------------------------------\n");
+  printf("-------------------------------------------\n");
+  addElement(&listStart, &listEnd, 7);
+  printf("List with added element: 7\n");
   printCelula(listStart);
-  printf("\n-------------------------------------------\n");
+  printf("-------------------------------------------\n");
+  printf("Removed: %i\n", removeElement(&listStart, &listEnd));
+  printCelula(listStart);
+  printf("-------------------------------------------\n");
+  printf("Removed: %i\n", removeElement(&listStart, &listEnd));
+  printCelula(listStart);
+  printf("-------------------------------------------\n");
+  printf("Removed: %i\n", removeElement(&listStart, &listEnd));
+  printCelula(listStart);
+  printf("-------------------------------------------\n");
 
   return 0;
 }
