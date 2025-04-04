@@ -2,23 +2,23 @@
 #include <stdlib.h>
 
 typedef struct cel {
-    int valor;
-    struct cel *prox;
+    int value;
+    struct cel *next;
 } celula;
 
 celula *createListFromArray(int x[]) { // headed lists allows us to treat every cell with a same treatment
   celula *newElement = malloc(sizeof(celula)); // allocate memory for the new element
-  newElement -> valor = 0;
-  newElement -> prox = NULL;
+  newElement -> value = 0;
+  newElement -> next = NULL;
   celula *list = newElement; // saving list's first element
   celula *lastCreated = newElement; // helper variable
 
   int i;
   for (i = 0; i < 5; i++) {
       newElement = malloc(sizeof(celula));
-      newElement -> valor = x[i];
-      newElement -> prox = NULL;
-      lastCreated -> prox = newElement;
+      newElement -> value = x[i];
+      newElement -> next = NULL;
+      lastCreated -> next = newElement;
       lastCreated = newElement; // keeping track of the last element
   }
 
@@ -27,22 +27,22 @@ celula *createListFromArray(int x[]) { // headed lists allows us to treat every 
 
 void printCelula(celula *list) { // prints all elements
     if (list == NULL) return;
-    printf("%i\n", list -> valor);
-    printCelula(list -> prox);
+    printf("%i\n", list -> value);
+    printCelula(list -> next);
 }
 
 void addElement(celula *p, int x) { // add element after the given address
-  celula *nova = malloc(sizeof(celula));
-  nova -> prox = p -> prox;
-  nova -> valor = x;
-  p -> prox = nova;
+  celula *new = malloc(sizeof(celula));
+  new -> next = p -> next;
+  new -> value = x;
+  p -> next = new;
 }
 
 int removeElement(celula *p) { // remove the element after the given address
-  if(!(p -> prox == NULL)) {
-    celula *lixo = p -> prox;
-    int x = lixo -> valor;
-    p -> prox = lixo -> prox;
+  if(!(p -> next == NULL)) {
+    celula *lixo = p -> next;
+    int x = lixo -> value;
+    p -> next = lixo -> next;
     free(lixo);
     return x;
   } else {
@@ -54,7 +54,7 @@ celula *getElement(celula *list, int pos) { // get a random cel for operations
   pos++;
   celula *current = list;
   for(int i = 1; i < pos; i++) {
-    current = current -> prox;
+    current = current -> next;
   }
   return current;
 }
@@ -65,13 +65,13 @@ int main() {
   
   addElement(getElement(list,0),7);
   addElement(getElement(list,3),8);
-  printCelula(list -> prox);
+  printCelula(list -> next);
   printf("\n-------------------------------------------\n");
   printf("Removed element: %i", removeElement(getElement(list,0)));
   printf("\n-------------------------------------------\n");
   printf("Removed element: %i", removeElement(getElement(list,5)));
   printf("\n-------------------------------------------\n");
-  printCelula(list -> prox);
+  printCelula(list -> next);
 
   return 0;
 }
