@@ -2,7 +2,7 @@
 
 void printArray(int n, int v[]) {
   for(int i = 0; i < n; i++) {
-    printf("%i) %ikm/h\n", i, v[i]);
+    printf("%i) %ikm/h\n", i + 1, v[i]);
   }
 }
 
