@@ -22,4 +22,6 @@ int main() {
   insertSort(vSize, v);
 
   printArray(vSize, v);
+
+  return 0;
 }
