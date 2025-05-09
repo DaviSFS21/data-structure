@@ -10,17 +10,15 @@ void selectSort(int n, int v[]) {
   for (int i = 0; i < n; i++) {
     int greater = v[i];
     int greaterPos = i;
-    for (int j = i; j < n; j++) {
+    for (int j = i + 1; j < n; j++) {
       if (v[j] > greater) {
         greater = v[j];
         greaterPos = j;
       }
     }
-    if (i != greaterPos) {
-      int x = v[i];
-      v[i] = greater;
-      v[greaterPos] = x;
-    }
+    int x = v[i];
+    v[i] = greater;
+    v[greaterPos] = x;
   }
 }
 
