@@ -16,11 +16,11 @@ void shellSort(int v[], int n) {
 }
 
 int main() {
-  int v[] = {331,326,333,330,329,319,325};
-  int vSize = sizeof(v) / sizeof(v[0]);
-  shellSort(v, vSize);
+  int array[] = {331,326,333,330,329,319,325};
+  int arraySize = sizeof(array) / sizeof(array[0]);
+  shellSort(array, arraySize);
 
-  printArray(vSize, v);
+  printArray(arraySize, array);
 
   return 0;
 }
