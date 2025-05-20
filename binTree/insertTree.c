@@ -29,6 +29,7 @@ void insertTree(no **bt, int x) {
 }
 
 int main() {
+  // TODO: initialize the pointer correctly
   no *tree = NULL;
 
   insertTree(&tree, 4);
