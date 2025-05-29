@@ -7,12 +7,16 @@ void printArray(int n, int v[]) {
 }
 
 void shellSort(int v[], int n) {
-  for (int gap = n/2; gap > 0; gap /= 2)
-    for (int i = 0; v[i + 1] > v[i] && i > 0; i++) {
-      int x = v[i - 1];
-      v[i - 1] = v[i];
-      v[i] = x;
+  for (int gap = n/2; gap > 0; gap /= 2) {
+    for (int i = gap; i < n; i++) {
+      int x = v[i];
+      int j;
+      for (j = i; j >= gap && v[j - gap] > x; j -= gap) {
+        v[j] = v[j - gap];
+      }
+      v[j] = x;
     }
+  }
 }
 
 int main() {
