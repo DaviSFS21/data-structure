@@ -11,12 +11,10 @@ void printTree(no *bt) {
   if (bt != NULL) {
     if (bt -> esq != NULL) {
       printTree(bt -> esq);
-      printf("\n");
     }
-    printf("%i", bt -> valor);
+    printf("%i\n", bt -> valor);
     if (bt -> dir != NULL) {
       printTree(bt -> dir);
-      printf("\n");
     }
   }
 }
@@ -35,31 +33,32 @@ void insertTree(no **bt, int x) {
 }
 
 int removeTree(no **bt) {
-  no *rm = *bt;
+  int rm = (*bt) -> valor;
 
-  if ((*bt) -> esq != NULL && (*bt) -> dir != NULL) {
+  if ((*bt) -> esq == NULL && (*bt) -> dir == NULL) {
     free(*bt);
-    return rm -> valor;
+    return rm;
   }
   
-  if ((*bt) -> esq != NULL) {
+  if ((*bt) -> esq == NULL) {
     *bt = (*bt) -> dir;
-    return rm -> valor;
+    return rm;
   }
   
-  if ((*bt) -> dir != NULL) {
+  if ((*bt) -> dir == NULL) {
     *bt = (*bt) -> esq;
-    return rm -> valor;
+    return rm;
   }
 
-  no *next = (*bt) -> dir;
+  no **next = &((*bt) -> dir);
 
-  while (0) {
-    if (next -> esq == NULL) {
-      (*bt) -> valor = next -> valor;
-      return rm -> valor;
+  while (1) {
+    if ((*next) -> esq == NULL) {
+      (*bt) -> valor = (*next) -> valor;
+      (*next) = (*next) -> dir;
+      return rm;
     } else {
-      next = rm -> esq;
+      next = &((*next) -> esq);
     }
   }
 
@@ -75,8 +74,9 @@ int main() {
   insertTree(&tree, 10);
   insertTree(&tree, 5);
   insertTree(&tree, 7);
-  printf("%i", removeTree(&tree));
-
+  printTree(tree);
+  printf("\nremove: %i\n", removeTree(&tree));
+  
   printTree(tree);
 
   return 0;
