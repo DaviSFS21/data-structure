@@ -75,7 +75,7 @@ int main() {
   insertTree(&tree, 5);
   insertTree(&tree, 7);
   printTree(tree);
-  printf("\nremove: %i\n", removeTree(&tree));
+  printf("\nremove: %i\n\n", removeTree(&tree));
   
   printTree(tree);
 
