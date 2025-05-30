@@ -29,15 +29,17 @@ void insertTree(no **bt, char x[]) {
     *bt = new;
     return;
   }
-  if (x[0] < (*bt) -> text[0]) insertTree(&(*bt) -> esq, x);
-  if (x[0] > (*bt) -> text[0]) insertTree(&(*bt) -> dir, x);
+
+  int i = 0;
+
+  while (x[i] == (*bt) -> text[0] && i < 3) i++;
+
+  if (x[i] < (*bt) -> text[i]) insertTree(&(*bt) -> esq, x);
+  if (x[i] > (*bt) -> text[i]) insertTree(&(*bt) -> dir, x);
 }
 
 void removeTree(no **bt) {
-  char rm[10];
-
-  strcpy(rm, (*bt) -> text);
-  printf("removed: %s\n", rm);
+  printf("removed: %s\n", (*bt) -> text);
 
   if ((*bt) -> esq == NULL && (*bt) -> dir == NULL) {
     free(*bt);
@@ -54,21 +56,27 @@ void removeTree(no **bt) {
     return;
   }
 
-  no **next = &((*bt) -> dir);
-
-  while (1) {
-    if ((*next) -> esq == NULL) {
-      strcpy((*bt) -> text, (*next) -> text);
-      (*next) = (*next) -> dir;
-      return;
-    } else {
-      next = &((*next) -> esq);
-    }
+  no **dad = &((*bt) -> dir);
+  no **son = &((*dad) -> esq);
+  if ((*son) != NULL) *son = (*dad) -> esq;
+  else {
+    (*dad) -> esq = (*bt) -> esq;
+    *bt = *dad;
+    return;
   }
+
+  do {
+    dad = son;
+    son = &((*son) -> esq);
+  } while((*son) -> esq != NULL);
+
+  (*dad) -> esq = (*son) -> dir;
+  (*son) -> esq = (*bt) -> esq;
+  (*son) -> dir = (*bt) -> dir;
+  free(*bt);
 }
 
 int main() {
-  // TODO: initialize the pointer correctly
   no *tree = NULL;
 
   insertTree(&tree, "joao");
