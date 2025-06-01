@@ -32,7 +32,7 @@ void insertTree(no **bt, char x[]) {
 
   int i = 0;
 
-  while (x[i] == (*bt) -> text[0] && i < 3) i++;
+  while (x[i] == (*bt) -> text[i] && i < 3) i++;
 
   if (x[i] < (*bt) -> text[i]) insertTree(&(*bt) -> esq, x);
   if (x[i] > (*bt) -> text[i]) insertTree(&(*bt) -> dir, x);
@@ -80,9 +80,11 @@ int main() {
   no *tree = NULL;
 
   insertTree(&tree, "joao");
+  insertTree(&tree, "jose");
   insertTree(&tree, "davi");
   insertTree(&tree, "ana");
   insertTree(&tree, "poli");
+  insertTree(&tree, "daniel");
   insertTree(&tree, "tiago");
   printTree(tree);
   removeTree(&tree);
