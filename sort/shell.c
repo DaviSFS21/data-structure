@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<math.h>
 
 void printArray(int n, int v[]) {
   for(int i = 0; i < n; i++) {
@@ -7,14 +8,25 @@ void printArray(int n, int v[]) {
 }
 
 void shellSort(int v[], int n) {
-  for (int gap = n/2; gap > 0; gap /= 2) {
-    for (int i = gap; i < n; i++) {
-      int x = v[i];
-      int j;
-      for (j = i; j >= gap && v[j - gap] > x; j -= gap) {
-        v[j] = v[j - gap];
+  int max_gaps_size = 0;
+  for (int i = 0; pow(2, i) + 1 < n; i++) {
+      max_gaps_size++;
+  }
+  int gaps[max_gaps_size];
+
+  gaps[0] = 1;
+
+  for (int i = 1; pow(2, i) + 1 < n; i++) {
+    gaps[i] = pow(2, i) + 1;
+  }
+
+  for (int i = max_gaps_size; i > 0; i--) {
+    for (int j = 0; j + gaps[i] < n; j++) {
+      for (int k = j; v[k] < v[k + gaps[i]] && k > 0; k--) {
+        int x = v[j];
+        v[j] = v[j + gaps[i]];
+        v[j + gaps[i]] = x;
       }
-      v[j] = x;
     }
   }
 }
