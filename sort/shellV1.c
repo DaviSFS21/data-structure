@@ -18,12 +18,10 @@ int generateHibbardGaps(int n, int gaps[]) {
 void shellSort(int v[], int n, int gaps[], int gapsSize) {
   for (int i = gapsSize - 1; i >= 0; i--) {
     for (int j = 0; j + gaps[i] < n; j++) {
-      int k = j; 
-      while (v[k] < v[k + gaps[i]] && k >= 0) {
+      for (int k = j; v[k] < v[k + gaps[i]] && k > 0; k--) {
         int x = v[k];
         v[k] = v[k + gaps[i]];
         v[k + gaps[i]] = x;
-        if (k - gaps[i] >= 0) k -= gaps[i];
       }
     }
   }
@@ -35,7 +33,6 @@ int main() {
   int gaps[32];
   int arraySize = sizeof(array) / sizeof(array[0]);
   int gapsSize = generateHibbardGaps(arraySize, gaps);
-
   shellSort(array, arraySize, gaps, gapsSize);
 
   printArray(arraySize, array);
